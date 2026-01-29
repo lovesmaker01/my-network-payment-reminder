@@ -1,163 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aking Website</title>
-    <!-- CSS -->
-    <style>
-        /* General Styles */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f9;
-            color: #333;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InstallPro Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ===== General Styles ===== */
+body { margin:0; font-family:'Inter',sans-serif; background:#f4f6f8; }
+a { text-decoration:none; color:inherit; }
+button { cursor:pointer; }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+/* ===== Login Page ===== */
+#loginPage {
+  display:flex; align-items:center; justify-content:center; height:100vh; background:#2c3e50; color:white;
+}
+#loginPage input { padding:10px; margin:5px 0; width:100%; border-radius:5px; border:none; }
+#loginPage .btn { background:#3498db; color:white; width:100%; }
 
-        /* Header */
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
+/* ===== Dashboard Layout ===== */
+#dashboardPage { display:none; }
+.sidebar {
+  width:250px; position:fixed; height:100%; background:#2c3e50; color:#ecf0f1; display:flex; flex-direction:column; padding-top:30px;
+}
+.sidebar a { padding:15px 20px; display:block; color:#ecf0f1; transition:0.3s; }
+.sidebar a:hover { background:#34495e; }
+.main { margin-left:250px; padding:20px; }
+h2 { margin-bottom:20px; color:#2c3e50; }
+.card { background:white; padding:20px; border-radius:8px; margin-bottom:20px; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #333;
-        }
+/* Buttons */
+.btn { background:#3498db; color:white; padding:10px 15px; border:none; border-radius:5px; margin-top:10px; transition:0.3s; }
+.btn:hover { background:#2980b9; }
 
-        nav a {
-            color: white;
-            padding: 14px 20px;
-            display: block;
-            transition: 0.3s;
-        }
+/* Code Block */
+pre { background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; overflow:auto; font-size:0.9em; }
 
-        nav a:hover {
-            background-color: #575757;
-        }
+/* Payment Table */
+table { width:100%; border-collapse:collapse; }
+th, td { padding:12px; text-align:left; border-bottom:1px solid #ddd; }
+th { background:#3498db; color:white; }
 
-        /* Hero Section */
-        .hero {
-            background-color: #e8f5e9;
-            padding: 100px 20px;
-            text-align: center;
-        }
+/* Option Cards */
+.option-card { background:#3498db; color:white; padding:20px; border-radius:8px; cursor:pointer; flex:1; text-align:center; transition:0.3s; margin-right:10px; }
+.option-card:hover { background:#2980b9; transform:translateY(-3px); }
+.flex-row { display:flex; gap:10px; }
 
-        .hero h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
+/* Toggle Switch */
+.switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; transition: 0.4s; border-radius: 24px; }
+.slider:before { position: absolute; content:""; height: 20px; width: 20px; left: 2px; bottom: 2px; background:white; transition:0.4s; border-radius:50%; }
+input:checked + .slider { background: #3498db; }
+input:checked + .slider:before { transform: translateX(26px); }
 
-        .hero p {
-            font-size: 1.2em;
-        }
-
-        /* About Section */
-        .about {
-            padding: 50px 20px;
-            max-width: 800px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .about h2 {
-            margin-bottom: 20px;
-            color: #4CAF50;
-        }
-
-        /* Button */
-        .btn {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1em;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2em;
-            }
-        }
-    </style>
+/* Responsive */
+@media (max-width:768px) { .sidebar { width:100%; height:auto; position:relative; } .main { margin-left:0; } }
+</style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <h1>Aking Website</h1>
-        <p>Maligayang pagdating sa aking website!</p>
-    </header>
+<!-- ===== Login Page ===== -->
+<div id="loginPage">
+  <div style="width:300px;">
+    <h2>InstallPro Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button class="btn" onclick="login()">Login</button>
+  </div>
+</div>
 
-    <!-- Navigation -->
-    <nav>
-        <a href="#hero">Home</a>
-        <a href="#about">About</a>
-        <a href="#contact" id="contactLink">Contact</a>
-    </nav>
+<!-- ===== Dashboard Page ===== -->
+<div id="dashboardPage">
+  <div class="sidebar">
+    <a href="#dashboard">Dashboard</a>
+    <a href="#mikrotik-setup">MikroTik Setup</a>
+    <a href="#payment-reminder">Payment Reminder</a>
+    <a href="#profile">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <h1>Hello, Mundo!</h1>
-        <p>Ito ay isang modernong website na ginawa gamit ang HTML, CSS, at JavaScript.</p>
-        <button class="btn" onclick="showMessage()">Click Me!</button>
-    </section>
+  <div class="main">
+    <h2>Welcome, Admin!</h2>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <h2>Tungkol sa Akin</h2>
-        <p>
-            Ako ay nag-aaral gumawa ng website at natututo ng web development. 
-            Ang website na ito ay halimbawa ng interactive at responsive design na puwede mong i-expand pa.
-        </p>
-    </section>
+    <!-- Dashboard Overview -->
+    <div class="card" id="dashboard">
+      <h3>Overview</h3>
+      <p>Monitor MikroTik clients, payment status, and system updates.</p>
+    </div>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <p>Copyright &copy; 2026 Aking Website</p>
-    </footer>
+    <!-- MikroTik Setup -->
+    <div class="card" id="mikrotik-setup">
+      <h3>MikroTik Setup Instructions</h3>
+      <p>Select profile and run scripts for clients.</p>
 
-    <!-- JavaScript -->
-    <script>
-        function showMessage() {
-            alert("Salamat sa pag-click! 🌟");
-        }
+      <!-- Dropdown -->
+      <label>Select Profile:</label>
+      <select id="profileSelect" onchange="alert('Selected profile: '+this.value)">
+        <option value="non-paying">Non-Paying</option>
+        <option value="trial">Trial</option>
+        <option value="vip">VIP</option>
+      </select>
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+      <!-- Toggle -->
+      <p>Enable Auto-Update Whitelist:</p>
+      <label class="switch">
+        <input type="checkbox" id="autoUpdateToggle" onchange="alert('Auto-Update: '+this.checked)">
+        <span class="slider"></span>
+      </label>
+
+      <!-- Option Cards -->
+      <div class="flex-row" style="margin-top:15px;">
+        <div class="option-card" onclick="alert('Running script...')">Run Script</div>
+        <div class="option-card" onclick="alert('Viewing logs...')">View Logs</div>
+        <div class="option-card" onclick="alert('Reset Pool...')">Reset Pool</div>
+      </div>
+
+      <!-- Code block -->
+      <button class="btn" onclick="toggleSetup()">Show/Hide Script</button>
+      <button class="btn" onclick="copySetup()">Copy Script</button>
+      <pre id="setupCode" style="display:none;">
+/ip pool add name=NON-PAYMENT-POOL ranges=10.69.0.2-10.69.1.254
+/ppp profile add name=NON-PAYMENT local-address=10.69.0.1 remote-address=NON-PAYMENT-POOL dns-server=8.8.8.8,8.8.4.4 rate-limit=800k/800k
+...
+/system scheduler add name="autoUpdateWhitelist" interval=5m on-event=updateWhitelist
+      </pre>
+    </div>
+
+    <!-- Payment Reminder -->
+    <div class="card" id="payment-reminder">
+      <h3>Payment Reminder</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Client Name</th><th>IP</th><th>Due Date</th><th>Status</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="paymentTable">
+          <tr>
+            <td>Juan Dela Cruz</td><td>10.69.0.10</td><td>2026-02-10</td>
+            <td style="color:red;">Overdue</td>
+            <td><button class="btn" onclick="sendReminder(this)">Send Reminder</button></td>
+          </tr>
+          <tr>
+            <td>Maria Santos</td><td>10.69.0.12</td><td>2026-02-15</td>
+            <td style="color:orange;">Pending</td>
+            <td><button class="btn" onclick="sendReminder(this)">Send Reminder</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== JavaScript ===== -->
+<script>
+  // ===== Login / Logout =====
+  function login() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    if(user==='admin' && pass==='admin123'){ // simple front-end login
+      document.getElementById('loginPage').style.display='none';
+      document.getElementById('dashboardPage').style.display='block';
+    } else { alert('Invalid credentials'); }
+  }
+  function logout() {
+    document.getElementById('dashboardPage').style.display='none';
+    document.getElementById('loginPage').style.display='flex';
+  }
+
+  // ===== MikroTik Setup Scripts =====
+  function toggleSetup() {
+    const codeBlock = document.getElementById('setupCode');
+    codeBlock.style.display = codeBlock.style.display==='none'?'block':'none';
+  }
+  function copySetup() {
+    const code = document.getElementById('setupCode').innerText;
+    navigator.clipboard.writeText(code).then(()=>{ alert('Script copied! 🚀'); });
+  }
+
+  // ===== Payment Reminder =====
+  function sendReminder(button) {
+    const row = button.closest('tr');
+    const client = row.cells[0].innerText;
+    alert(`Reminder sent to ${client}! ✉️`);
+    row.cells[3].innerText='Reminder Sent';
+    row.cells[3].style.color='green';
+  }
+</script>
+
 </body>
 </html>
